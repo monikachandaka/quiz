@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Online Quiz</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Online Quiz</h2>
+
+<div id="timer">Time Left: 60</div>
+
+<div class="progress-container">
+<div id="progress-bar"></div>
+</div>
+
+<form action="/result" method="post">
+
+<div class="nav-panel">
+{% for q in questions %}
+<span class="nav-btn" onclick="scrollToQ({{loop.index0}})">
+{{loop.index}}
+</span>
+{% endfor %}
+</div>
+
+{% for q in questions %}
+
+{% set q_index = loop.index0 %}
+
+<div class="question" id="q{{q_index}}">
+
+<p>{{ q.question }}</p>
+
+{% for option in q.options %}
+
+<label class="option">
+
+<input type="radio"
+name="q{{ q_index }}"
+value="{{ option }}"
+onclick="markAnswer(this)">
+
+{{ option }}
+
+</label>
+
+{% endfor %}
+
+</div>
+
+{% endfor %}
+
+<button type="submit">Submit Quiz</button>
+
+</form>
+
+</div>
+
+</body>
+
+</html>
